@@ -1,0 +1,29 @@
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+*.DS_Store
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+
+### Gradle template
+.gradle
+build/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+### JetBrains template
+.idea/
+*.iws
+*.ipr
+# mpeltonen/sbt-idea plugin
+.idea_modules/
