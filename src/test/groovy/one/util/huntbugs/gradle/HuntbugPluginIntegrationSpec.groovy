@@ -1,14 +1,29 @@
 package one.util.huntbugs.gradle
 
-import nebula.test.IntegrationSpec
+import com.google.common.base.Predicate
+import com.google.common.base.Predicates
+import com.google.common.base.StandardSystemProperty
 import nebula.test.functional.ExecutionResult
+import nebula.test.functional.GradleRunner
 
 import java.nio.file.Path
+import java.nio.file.Paths
+
 /**
  * @author tolkv
  * @since 30/05/16
  */
-class HuntbugPluginIntegrationSpec extends IntegrationSpec {
+class HuntbugPluginIntegrationSpec extends ExtendedClasspathIntegrationSpec {
+
+  def setup(){
+    classpathFilter = Predicates.<URL>or(
+            { URL url ->
+              File userDir = new File(StandardSystemProperty.USER_DIR.value())
+              Paths.get(url.toURI()).startsWith(userDir.toPath())
+            } as Predicate,
+            GradleRunner.CLASSPATH_GRADLE_CACHE)
+
+  }
 
   def 'runs build'() {
     when:
@@ -41,7 +56,7 @@ class HuntbugPluginIntegrationSpec extends IntegrationSpec {
     }
     '''.stripIndent().stripMargin()
 
-    buildFile << '''
+    buildFile << """
             buildscript {
               repositories {
                 mavenLocal()
@@ -53,7 +68,7 @@ class HuntbugPluginIntegrationSpec extends IntegrationSpec {
             }
 
             apply plugin: 'java'
-            apply plugin: 'one.util.huntbugs'
+            ${applyPlugin(HuntBugsPlugin)}
 
             repositories {
               mavenLocal()
@@ -66,7 +81,7 @@ class HuntbugPluginIntegrationSpec extends IntegrationSpec {
               compile 'org.apache.commons:commons-lang3:3.1'
               compile 'one.util:huntbugs:0.0.4'
             }
-        '''.stripIndent()
+        """.stripIndent()
 
     when:
     ExecutionResult result = runTasks('huntbugs')
