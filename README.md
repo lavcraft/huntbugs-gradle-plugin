@@ -51,3 +51,22 @@ This directory contain integration test data for you, explore it :)
 
 1. `./gradlew build` build
 2. `./gradlew pTML` publish to maven local
+
+Or make pull request. New code build in CI and give you feedback about status and coverage changes :)
+
+For advanced information see build script in `./gradle/buildViaTravis.sh`
+
+SNAPSHOTS and DEV artifacts contains in [HuntBugs Artifactory](https://huntbugs.jfrog.io/huntbugs/webapp/#/artifacts/browse/tree/General/oss-snapshot-local/one/util/huntbugs/huntbugs-gradle-plugin). You may use it if you are a plugin developer.
+If you have a credentials for access to artifactory, you can use it! Otherwise, chat with me in [gitter](https://gitter.im/lavcraft/huntbugs-gradle-plugin) [![Join the chat at https://gitter.im/lavcraft/huntbugs-gradle-plugin](https://badges.gitter.im/lavcraft/huntbugs-gradle-plugin.svg)](https://gitter.im/lavcraft/huntbugs-gradle-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) and i try to help you.
+
+3. `./gradlew snapshot` use for build and deploy to snapshots repository
+
+### Release flow in travis ci
+
+1. Pull Request - *eys*
+    * simple build by `./gradlew build`
+2. Pull Request - *no* and Git Tag: *no*
+    * build and deploy snapshot to artifactory by `./gradlew snapshot` command
+3. Pull Request - *no* and Git Tag: *yes*
+    * If tag is `*-rc\.*` - build release candidate by `./gradlew candidate`
+    * Otherwise build release (final) - `./gradlew final publishPlugins` and publish plugins to [plugins.gradle.com](http://plugins.gradle.com)
