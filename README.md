@@ -1,6 +1,8 @@
 HuntBugs Gradle Plugin
 ======================
 
+[![Join the chat at https://gitter.im/lavcraft/huntbugs-gradle-plugin](https://badges.gitter.im/lavcraft/huntbugs-gradle-plugin.svg)](https://gitter.im/lavcraft/huntbugs-gradle-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Gradle plugin for static analyzer tool [HuntBugs](https://github.com/amaembo/huntbugs)
 
 [![Join the chat at https://gitter.im/amaembo/huntbugs](https://badges.gitter.im/amaembo/huntbugs.svg)](https://gitter.im/amaembo/huntbugs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
