@@ -62,12 +62,12 @@ pluginBundle {
 }
 
 artifactory {
-  contextUrl = findProperty('artifactory_contextUrl')
+  contextUrl = project.findProperty('artifactory_contextUrl')
 
   publish {
     repository {
-      username = findProperty('artifactory_user')
-      password = findProperty('artifactory_password')
+      username = project.findProperty('artifactory_user')
+      password = project.findProperty('artifactory_password')
       maven = true
     }
 
@@ -79,8 +79,8 @@ artifactory {
 }
 
 bintray {
-  user = findProperty('bintrayUser')
-  key = findProperty('bintrayKey')
+  user = project.findProperty('bintrayUser2')
+  key = project.findProperty('bintrayKey2')
 
   publications = ['nebula']
   dryRun = false
