@@ -5,7 +5,7 @@ buildscript {
   }
   dependencies {
     classpath 'com.netflix.nebula:nebula-plugin-plugin:4.8.0'
-    classpath "com.gradle.publish:plugin-publish-plugin:0.9.4"
+    classpath 'com.gradle.publish:plugin-publish-plugin:0.9.4'
   }
 }
 
@@ -17,6 +17,7 @@ repositories {
 description 'HuntBugs gradle plugin'
 
 apply plugin: 'groovy'
+apply plugin: 'codenarc'
 apply plugin: "com.gradle.plugin-publish"
 apply plugin: 'nebula.plugin-plugin'
 
@@ -58,6 +59,24 @@ pluginBundle {
       displayName = 'Gradle HuntBugs plugin'
     }
   }
+}
+
+artifactory {
+  contextUrl = "${artifactory_contextUrl}"
+
+  publish {
+    repository {
+      username = "${artifactory_user}"
+      password = "${artifactory_password}"
+      maven = true
+    }
+
+    defaults {
+      publications('nebula')
+      publishArtifacts = true
+    }
+  }
+
 }
 
 task wrapper(type: Wrapper) {
