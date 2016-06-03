@@ -9,4 +9,13 @@ class HuntbugsPluginSpec extends PluginProjectSpec {
     'one.util.huntbugs'
   }
 
+  def 'add huntbugs task'() {
+    when:
+    project.plugins.apply(HuntBugsPlugin)
+
+    then:
+    project.tasks.getByName('huntbugs')
+    project.extensions.getByName('huntbugs')
+  }
+
 }
