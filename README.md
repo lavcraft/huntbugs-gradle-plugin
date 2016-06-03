@@ -4,6 +4,7 @@ HuntBugs Gradle Plugin
 Gradle plugin for static analyzer tool [HuntBugs](https://github.com/amaembo/huntbugs)
 
 [![Build Status](https://travis-ci.org/lavcraft/huntbugs-gradle-plugin.svg?branch=master)](https://travis-ci.org/lavcraft/huntbugs-gradle-plugin)
+[![Coverage Status](https://coveralls.io/repos/github/lavcraft/huntbugs-gradle-plugin/badge.svg?branch=master)](https://coveralls.io/github/lavcraft/huntbugs-gradle-plugin?branch=master)
 [![Join the chat at https://gitter.im/amaembo/huntbugs](https://badges.gitter.im/amaembo/huntbugs.svg)](https://gitter.im/amaembo/huntbugs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Usage
