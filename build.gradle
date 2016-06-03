@@ -54,7 +54,7 @@ pluginBundle {
 
   plugins {
     huntBugsPlugin {
-      id = 'huntbugs'
+      id = 'one.util.huntbugs'
       displayName = 'Gradle HuntBugs plugin'
     }
   }
