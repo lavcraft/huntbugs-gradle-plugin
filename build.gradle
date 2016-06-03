@@ -80,7 +80,7 @@ artifactory {
 }
 
 bintray {
-  publish = true
+  publish = false
 }
 
 task wrapper(type: Wrapper) {
