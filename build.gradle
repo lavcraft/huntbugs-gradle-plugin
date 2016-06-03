@@ -79,8 +79,8 @@ artifactory {
 }
 
 bintray {
-  user = project.findProperty('bintrayUser2')
-  key = project.findProperty('bintrayKey2')
+  user = project.findProperty('bintrayUser')
+  key = project.findProperty('bintrayKey')
 
   publications = ['nebula']
   dryRun = false
