@@ -65,8 +65,9 @@ class HuntBugsTask extends DefaultTask {
   protected void runAnalysis() {
     def convention = extractJavaPluginConvention(project)
 
-    if (!convention)
+    if (!convention) {
       return
+    }
 
     logger.debug 'HuntBugs plugin'.center(FORMAT_BLOCK_WIDTH, '=')
 
@@ -133,8 +134,9 @@ class HuntBugsTask extends DefaultTask {
 
   File extractClassesDir(@NotNull JavaPluginConvention convention) {
 
-    if (classesDir && classesDir.exists())
+    if (classesDir && classesDir.exists()){
       return classesDir
+    }
 
     return convention.sourceSets
         .getByName(SourceSet.MAIN_SOURCE_SET_NAME)
