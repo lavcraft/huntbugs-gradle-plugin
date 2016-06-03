@@ -79,6 +79,10 @@ artifactory {
 
 }
 
+bintray {
+  publish = true
+}
+
 task wrapper(type: Wrapper) {
   gradleVersion = '2.13'
 }
