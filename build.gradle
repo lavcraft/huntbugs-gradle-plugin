@@ -62,12 +62,12 @@ pluginBundle {
 }
 
 artifactory {
-  contextUrl = "${artifactory_contextUrl}"
+  contextUrl = findProperty('artifactory_contextUrl')
 
   publish {
     repository {
-      username = "${artifactory_user}"
-      password = "${artifactory_password}"
+      username = findProperty('artifactory_user')
+      password = findProperty('artifactory_password')
       maven = true
     }
 
@@ -76,11 +76,33 @@ artifactory {
       publishArtifacts = true
     }
   }
-
 }
 
 bintray {
-  publish = false
+  user = findProperty('bintrayUser')
+  key = findProperty('bintrayKey')
+
+  publications = ['nebula']
+  dryRun = false
+  publish = true
+  pkg {
+    userOrg = 'huntbugs'
+    repo = 'huntbugs-gradle-plugin'
+    name = 'huntbugs-gradle-plugin'
+    desc = project.description
+    websiteUrl = 'https://github.com/amaembo/huntbugs'
+    issueTrackerUrl = 'https://github.com/lavcraft/huntbugs-gradle-plugin'
+    vcsUrl = 'https://github.com/lavcraft/huntbugs-gradle-plugin'
+    licenses = ['Apache-2.0']
+    labels = ['huntbugs', 'static analyser', 'gradle', 'nebula']
+    publicDownloadNumbers = true
+    attributes = [:]
+    version {
+      name = project.version
+      vcsTag = project.version
+      attributes = [:]
+    }
+  }
 }
 
 task wrapper(type: Wrapper) {
