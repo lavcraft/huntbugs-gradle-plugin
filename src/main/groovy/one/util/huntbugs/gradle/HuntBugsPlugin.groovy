@@ -49,7 +49,7 @@ class HuntBugsPlugin implements Plugin<Project> {
     HuntBugsTask huntBugsTask = tasks.create(
         name: HUNTBUGS_TASK_NAME,
         type: HuntBugsTask,
-        group: 'analyse',
+        group: 'Verification',
         description: 'Start static analyse your project by HuntBugs. See more info https://github.com/amaembo/huntbugs',
         dependsOn: 'classes'
     ) as HuntBugsTask

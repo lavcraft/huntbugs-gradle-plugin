@@ -34,13 +34,14 @@ To include, add the following to your build.gradle
         classSimpleFilter = { true } // { it.endsWith('MyClassForAnalyse') } // class filter
         outputDirectory = file("${project.buildDir}/classes") // directory for save reports and analyse data
         minScore = 30 // HuntBugs score
-        quiet = false // quiet mode, deprecated. Use gradle --info/--debug/--stacktrace
         analyzePackage = '' //default package for start analyse
+        diff = true // enable "added" tab in report. Compare current analyse with previous
+        diffFile = null // Compare current analyse with custom file. Example value: file('./truthReport.xml')
     }
 
 ### Reports
 
-Reports may found in ${project.buildDir}/huntbugs/
+Reports can be found in dir ${project.buildDir}/huntbugs/
 
 ### Test
 
@@ -63,7 +64,7 @@ If you have a credentials for access to artifactory, you can use it! Otherwise, 
 
 ### Release flow in travis ci
 
-1. Pull Request - *eys*
+1. Pull Request - *yes*
     * simple build by `./gradlew build`
 2. Pull Request - *no* and Git Tag: *no*
     * build and deploy snapshot to artifactory by `./gradlew snapshot` command
