@@ -20,9 +20,14 @@ import com.strobel.assembler.metadata.ClasspathTypeLoader
 import com.strobel.assembler.metadata.CompositeTypeLoader
 import com.strobel.assembler.metadata.ITypeLoader
 import com.strobel.assembler.metadata.JarTypeLoader
+import groovy.transform.CompileStatic
 import one.util.huntbugs.analysis.AnalysisListener
 import one.util.huntbugs.analysis.AnalysisOptions
 import one.util.huntbugs.analysis.Context
+import one.util.huntbugs.analysis.HuntBugsResult
+import one.util.huntbugs.gradle.report.DefaultReportsCenter
+import one.util.huntbugs.gradle.report.XmlHtmlHuntBugsDefaultRenderer
+import one.util.huntbugs.input.XmlReportReader
 import one.util.huntbugs.output.Reports
 import one.util.huntbugs.repo.*
 import org.gradle.api.DefaultTask
@@ -32,6 +37,7 @@ import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.*
 
+import java.nio.file.Files
 import java.nio.file.Path
 import java.util.function.Predicate
 import java.util.jar.JarFile
@@ -44,8 +50,10 @@ import java.util.jar.JarFile
  *
  * @see HuntBugsExtension - contains default values
  */
+@CompileStatic
 class HuntBugsTask extends DefaultTask {
   public static final int FORMAT_BLOCK_WIDTH = 80
+  public static final String DEFAULT_RENDERER = 'default'
 
   @Input
   @Optional
@@ -55,9 +63,21 @@ class HuntBugsTask extends DefaultTask {
   File outputDirectory
 
   Predicate<String> classSimpleFilter
+
+  @Input
   int minScore
-  boolean quiet
+
+  @Input
   String analyzePackage
+
+  @Input
+  boolean diff
+
+  @Input
+  @Optional
+  File diffFile
+
+  boolean quiet
 
   @TaskAction
   protected void runAnalysis() {
@@ -112,7 +132,20 @@ class HuntBugsTask extends DefaultTask {
       Path xmlFile = path.resolve("report.xml")
       Path htmlFile = path.resolve("report.html")
 
-      Reports.write xmlFile, htmlFile, ctx
+      DefaultReportsCenter reportsCenter = new DefaultReportsCenter()
+
+      HuntBugsResult huntBugsResult = ctx
+
+      Path xmlReportForCompare = diffFile ? diffFile.toPath() : xmlFile
+      if (diff && Files.isRegularFile(xmlReportForCompare)) {
+        huntBugsResult = Reports.diff(XmlReportReader.read(ctx, xmlReportForCompare), ctx)
+      }
+
+      def renderer = new XmlHtmlHuntBugsDefaultRenderer(xmlFile, htmlFile)
+      reportsCenter.addSource(huntBugsResult)
+      reportsCenter.addRenderer(DEFAULT_RENDERER, renderer)
+
+      reportsCenter.computeAll()
     } catch (e) {
       logger.error "error", e
       throw new GradleException('Error during configuring huntbugs context', e)

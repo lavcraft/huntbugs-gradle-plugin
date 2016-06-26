@@ -15,11 +15,13 @@
  */
 package one.util.huntbugs.gradle
 
+import groovy.transform.CompileStatic
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.SourceSet
 
 import java.util.function.Predicate
+
 /**
  * HuntBugs gradle extension. It provide dsl for configure plugin in build.gradle files
  *
@@ -28,6 +30,7 @@ import java.util.function.Predicate
  *
  * @see HuntBugsPlugin#HUNTBUGS_EXTENSION_NAME for default dsl root
  */
+@CompileStatic
 class HuntBugsExtension {
   private final Project project
 
@@ -61,6 +64,13 @@ class HuntBugsExtension {
    * @see one.util.huntbugs.analysis.Context#analyzePackage(java.lang.String)
    */
   String analyzePackage = ''
+
+  boolean diff = true
+
+  /**
+   * Use #diffFile if you want to make diff from this file
+   */
+  File diffFile
 
   HuntBugsExtension() {}
 
