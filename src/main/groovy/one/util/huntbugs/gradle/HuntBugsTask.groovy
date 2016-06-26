@@ -30,10 +30,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.api.plugins.JavaPluginConvention
-import org.gradle.api.tasks.InputDirectory
-import org.gradle.api.tasks.OutputDirectory
-import org.gradle.api.tasks.SourceSet
-import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.*
 
 import java.nio.file.Path
 import java.util.function.Predicate
@@ -50,8 +47,9 @@ import java.util.jar.JarFile
 class HuntBugsTask extends DefaultTask {
   public static final int FORMAT_BLOCK_WIDTH = 80
 
-  @InputDirectory
-  def File classesDir
+  @Input
+  @Optional
+  File classesDir
 
   @OutputDirectory
   File outputDirectory
@@ -66,6 +64,7 @@ class HuntBugsTask extends DefaultTask {
     def convention = extractJavaPluginConvention(project)
 
     if (!convention) {
+      logger.quiet 'Non java project does not support'
       return
     }
 
@@ -76,6 +75,11 @@ class HuntBugsTask extends DefaultTask {
 
   def tryToStartAnalyse(File classesDir, Project project) {
     logger.debug 'HuntBugs: +dir {}', classesDir
+
+    if (!classesDir.exists() || classesDir.list().size() == 0) {
+      logger.info 'Classes dir is empty. Nothing to analyse'
+      return
+    }
 
     try {
       List<ITypeLoader> dependencyLoaders = project.configurations.getByName('compile')
@@ -134,7 +138,7 @@ class HuntBugsTask extends DefaultTask {
 
   File extractClassesDir(@NotNull JavaPluginConvention convention) {
 
-    if (classesDir && classesDir.exists()){
+    if (classesDir && classesDir.exists()) {
       return classesDir
     }
 
