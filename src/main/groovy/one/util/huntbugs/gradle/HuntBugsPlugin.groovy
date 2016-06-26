@@ -15,6 +15,7 @@
  */
 package one.util.huntbugs.gradle
 
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -31,6 +32,7 @@ import org.gradle.api.Project
  * @see HuntBugsTask execute analyse logic
  */
 @Slf4j
+@CompileStatic
 class HuntBugsPlugin implements Plugin<Project> {
 
   public static final String HUNTBUGS_EXTENSION_NAME = 'huntbugs'
@@ -59,6 +61,8 @@ class HuntBugsPlugin implements Plugin<Project> {
       huntBugsTask.classesDir = huntBugsExtension.classesDir
       huntBugsTask.quiet = huntBugsExtension.quiet
       huntBugsTask.analyzePackage = huntBugsExtension.analyzePackage
+      huntBugsTask.diff = huntBugsExtension.diff
+      huntBugsTask.diffFile = huntBugsExtension.diffFile
     }
 
   }
