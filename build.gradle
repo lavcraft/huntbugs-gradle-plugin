@@ -33,9 +33,9 @@ contacts {
 dependencies {
   compile gradleApi()
   compile localGroovy()
-  compile 'one.util:huntbugs:0.0.6'
+  compile 'one.util:huntbugs:0.0.9'
 
-  testCompile 'com.netflix.nebula:nebula-test:4.0.0'
+  testCompile 'com.netflix.nebula:nebula-test:4.2.2'
 }
 
 publishing {
